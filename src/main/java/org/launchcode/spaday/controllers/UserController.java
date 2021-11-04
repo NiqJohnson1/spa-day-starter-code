@@ -15,10 +15,6 @@ import javax.validation.Valid;
 @RequestMapping("user")
 public class UserController {
 
-//    public String user() {
-//        return "user";
-//    }
-
     @GetMapping("/add")
     public String displayAddUserForm(Model model){
         model.addAttribute(new User());
@@ -26,24 +22,12 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public String processAddUserForm(Model model, @ModelAttribute @Valid User user, Errors errors, String verify) {
-
-        if (errors.hasErrors() || !user.getPassword().equals(verify)) {
-            model.addAttribute("error", "Passwords do not match");
-            return "user/add";
+    public String processAddUserForm(Model model, @ModelAttribute @Valid User user, String verify) {
+        // issue is within the if statement.
+        if(user.getPassword().equals(verify)){
+            return "user/index";
         }
-        return "user/index";
-
-
+         return "user/add";
     }
-
-
-//    @PostMapping("/add")
-//    public String processAddUserForm(Model model, @ModelAttribute User user, String verify) {
-//        if(!user.getPassword().equals(verify)){
-//            return "user/add";
-//        }
-//         return "user/index";
-//    }
 
 }
